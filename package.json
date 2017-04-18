@@ -2,5 +2,14 @@
   "name": "cache-storategy",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@mizchi/babel-preset": "^1.0.2",
+    "ava": "^0.19.1",
+    "babel-preset-env": "^1.4.0"
+  },
+  "ava": {
+    "files": "test/**/*.test.js",
+    "babel": "inherit"
+  }
 }
