@@ -11,5 +11,8 @@
   "ava": {
     "files": "test/**/*.test.js",
     "babel": "inherit"
+  },
+  "dependencies": {
+    "path-to-regexp": "^1.7.0"
   }
 }
