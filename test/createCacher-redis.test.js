@@ -3,8 +3,6 @@ import test from 'ava'
 import createCacher from '../src/index'
 import redisCache, { client } from './helpers/redisCacheObject'
 
-const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
-
 const myStrategies = [
   {
     pattern: '/items/:id',
@@ -83,13 +81,4 @@ test('always call when url is not cacheable', async t => {
     url: '/xxx/yyy',
     createdAt: ret2.createdAt
   })
-})
-
-// TODO: This test does not work because redis does not flush in short span.
-test('does not return cache with /nocache', async t => {
-  const ret1 = await cacher({url: '/nocache'})
-  await wait(1200)
-  const ret2 = await cacher({url: '/nocache'})
-
-  t.is(ret1.createdAt !== ret2.createdAt)
 })
