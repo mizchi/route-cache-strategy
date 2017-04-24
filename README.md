@@ -37,26 +37,6 @@ const cacher = createCacher(myStrategies, func)
 })()
 ```
 
-## Express Middleware
+## License
 
-```js
-import { middlewareCreator } from 'cache-strategy'
-const cacher = createCacher([/* strategies */], input => ({/* loaded params */}))
-
-const server = require('express')() // eg. express with router
-server.use(middlewareCreator(cacher, {
-  modifyCacheKey(key, req) {
-    return key + ':' + req.useragent
-  }
-)
-
-// render steps with builtParams
-server.get('*', (req, res) => {
-  try {
-    const html = ReactDOMServer.renderToStaticMarkup(<App {...req.builtParams}/>)
-    res.send(html)
-  } catch (e) {
-    res.status(500).send('Internal Server Error')
-  }
-})
-```
+MIT
