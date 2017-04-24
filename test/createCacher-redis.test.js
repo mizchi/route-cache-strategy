@@ -1,13 +1,24 @@
 /* @flow */
 import test from 'ava'
 import createCacher from '../src/index'
+import redisCache, { client } from './helpers/redisCacheObject'
+
+const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 const myStrategies = [
   {
     pattern: '/items/:id',
     createCacheKey (params: { id: string }) {
-      return 'cache:' + params.id
-    }
+      return 'redis-cache:' + params.id
+    },
+    expire: 60 * 60 * 1000
+  },
+  {
+    pattern: '/nocache',
+    createCacheKey () {
+      return 'redis-cache:nocache'
+    },
+    expire: 1 * 1000
   }
 ]
 
@@ -27,7 +38,22 @@ const func: Input => Promise<Result> = async (input: Input) => {
   }
 }
 
-const cacher: Input => Promise<Result> = createCacher(myStrategies, func)
+const cacher: Input => Promise<Result> = createCacher(myStrategies, func, redisCache)
+
+const flushAll = () => new Promise((resolve, reject) => {
+  client.flushdb((err, _succeeded) => {
+    if (err) {
+      reject(err)
+      return
+    }
+    resolve()
+  })
+})
+
+test.beforeEach(async t => {
+  await flushAll()
+  t.pass()
+})
 
 test('returns object if url is cached by createCacheKey', async t => {
   const ret1 = await cacher({url: '/items/aaa'})
@@ -44,7 +70,7 @@ test('returns object if url is cached by createCacheKey', async t => {
   })
 })
 
-test('always call `call`', async t => {
+test('always call when url is not cacheable', async t => {
   const ret1 = await cacher({url: '/xxx/yyy'})
   t.deepEqual(ret1, {
     url: '/xxx/yyy',
@@ -57,4 +83,13 @@ test('always call `call`', async t => {
     url: '/xxx/yyy',
     createdAt: ret2.createdAt
   })
+})
+
+// TODO: This test does not work because redis does not flush in short span.
+test('does not return cache with /nocache', async t => {
+  const ret1 = await cacher({url: '/nocache'})
+  await wait(1200)
+  const ret2 = await cacher({url: '/nocache'})
+
+  t.is(ret1.createdAt !== ret2.createdAt)
 })

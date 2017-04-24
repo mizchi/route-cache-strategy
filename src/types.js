@@ -2,19 +2,19 @@
 
 export type PathToRegexp = RegExp & {
   keys: {
-    name: string
+    name: string // use only name from pathToRegexp(...) result
   }[]
 }
 
 export type CacheObject = Map<string, *> | {
-  has(key: string): Promise<boolean>,
   get(key: string): Promise<string>,
-  set(key: string, val: any): Promise<void>
+  set(key: string, val: any, expire?: number): Promise<void>
 }
 
 export type CacheStrategy = {
   pattern: string,
-  createCacheKey: (params: any) => Promise<string> | string
+  createCacheKey: (params: any) => Promise<string> | string,
+  expire?: number | void
 }
 
 export type CompiledCacheStrategy = CacheStrategy & {

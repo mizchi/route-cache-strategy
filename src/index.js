@@ -9,7 +9,7 @@ const defaultModifyCacheKey = (id: string) => id
 
 export default function createCacher (
   cacheStrategies: CacheStrategy[],
-  opts: CacherOption,
+  func: Function,
   cacheObject: CacheObject = new Map
 ) {
   // Compile pattern with pathToRegexp at first
@@ -17,31 +17,32 @@ export default function createCacher (
 
   const _isUrlCacheable = isUrlCacheable(compiledCacheStrategies)
   const _createCacheKey = createCacheKey(compiledCacheStrategies)
-
-  const newOpts: CacherAPI = {
-    modifyCacheKey: opts.modifyCacheKey || defaultModifyCacheKey,
-    call: opts.call
+  const _getExpire = (url: string) => {
+    const st = compiledCacheStrategies.find(i => i.compiledPattern.test(url))
+    return st && st.expire
   }
 
-  return async (input: { url: string }) => {
+  return async (input: { url: string }, callOpts?: { modifyCacheKey?: string => string }) => {
+    const modifyCacheKey = (callOpts && callOpts.modifyCacheKey) || defaultModifyCacheKey
     let state: any
     let key
     const isCacheable = _isUrlCacheable(input.url)
 
     if (isCacheable) {
       const rawKey = await _createCacheKey(input.url)
-      key = newOpts.modifyCacheKey(rawKey)
-      const hasCache = await cacheObject.has(key)
-      if (hasCache) {
-        state = await cacheObject.get(key)
+      key = modifyCacheKey(rawKey)
+      const cache = await cacheObject.get(key)
+      if (cache) {
+        state = cache
       }
     }
 
     if (!state) {
       // pure function
-      state = await newOpts.call(input)
+      state = await func(input)
       if (isCacheable && key) {
-        await cacheObject.set(key, state)
+        const expire: any = _getExpire(input.url)
+        await cacheObject.set(key, state, expire)
       }
     }
     return state
