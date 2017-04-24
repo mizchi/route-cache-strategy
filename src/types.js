@@ -23,12 +23,12 @@ export type CompiledCacheStrategy = CacheStrategy & {
 
 export type CacherOption = {
   modifyCacheKey?: (key: string) => string,
-  load(obj: { url: string }): Promise<any>
+  call(obj: { url: string }): Promise<any>
 }
 
 export type CacherAPI = {
   modifyCacheKey: (key: string) => string,
-  load(obj: { url: string }): Promise<any>
+  call(obj: { url: string }): Promise<any>
 }
 
 // express middleware

@@ -20,7 +20,7 @@ export default function createCacher (
 
   const newOpts: CacherAPI = {
     modifyCacheKey: opts.modifyCacheKey || defaultModifyCacheKey,
-    load: opts.load
+    call: opts.call
   }
 
   return async (input: { url: string }) => {
@@ -39,7 +39,7 @@ export default function createCacher (
 
     if (!state) {
       // pure function
-      state = await newOpts.load(input)
+      state = await newOpts.call(input)
       if (isCacheable && key) {
         await cacheObject.set(key, state)
       }

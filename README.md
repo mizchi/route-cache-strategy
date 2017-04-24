@@ -72,12 +72,12 @@ const server = // eg. express with router
 // use raw
 server.get('*', async (req, res) => {
   const platform = 'pc' // or switch to mobile by req.header
-  const state = await cacher.loadOrUse(req.url, {
+  const state = await cacher.callOrUse(req.url, {
     // Add more info to key
     modifyCacheKey(key) {
       return key + ':' + platform
     },
-    load() {
+    call() {
       return createStateByUrl(req.url)
     })
   })
@@ -90,7 +90,7 @@ server.use(cacher.middleware(req => ({
   modifyCacheKey(key) {
     return key + ':' + req.useragent
   },
-  load() {
+  call() {
     return createStateByUrl(req.url)
   }
 )))
