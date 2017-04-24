@@ -40,11 +40,11 @@ const cacher = createCacher(myStrategies, func)
 ## Express Middleware
 
 ```js
-const server = require('express')() // eg. express with router
 import { middlewareCreator } from 'cache-strategy'
 const cacher = createCacher([/* strategies */], input => ({/* loaded params */}))
 
-server.use(middlewareCreator(cache, {
+const server = require('express')() // eg. express with router
+server.use(middlewareCreator(cacher, {
   modifyCacheKey(key, req) {
     return key + ':' + req.useragent
   }
