@@ -1,11 +1,11 @@
 /* @flow */
-import type {CacheStrategy, LoadOrUseOption, Middleware} from './types'
+import type {CacheStrategy, CacherOption, Middleware} from './types'
 import createCacher from './index'
 
 export default (
   strategies: CacheStrategy[],
   storage: any,
-  opts: LoadOrUseOption
+  opts: CacherOption
 ): Middleware => {
   const cacher = createCacher(strategies, storage)
 

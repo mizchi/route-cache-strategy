@@ -21,12 +21,12 @@ export type CompiledCacheStrategy = CacheStrategy & {
   compiledPattern: PathToRegexp
 }
 
-export type LoadOrUseOption = {
+export type CacherOption = {
   modifyCacheKey?: (key: string) => string,
   load(obj: { url: string }): Promise<any>
 }
 
-export type LoadOrUse = {
+export type CacherAPI = {
   modifyCacheKey: (key: string) => string,
   load(obj: { url: string }): Promise<any>
 }

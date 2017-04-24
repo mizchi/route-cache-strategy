@@ -3,13 +3,13 @@ import pathToRegexp from 'path-to-regexp'
 import isUrlCacheable from './isUrlCacheable'
 import createCacheKey from './createCacheKey'
 import compileCacheStrategies from './compileCacheStrategies'
-import type { CacheObject, CacheStrategy, CompiledCacheStrategy, LoadOrUseOption, LoadOrUse } from './types'
+import type { CacheObject, CacheStrategy, CompiledCacheStrategy, CacherOption, CacherAPI } from './types'
 
 const defaultModifyCacheKey = (id: string) => id
 
 export default function createCacher (
   cacheStrategies: CacheStrategy[],
-  opts: LoadOrUseOption,
+  opts: CacherOption,
   cacheObject: CacheObject = new Map
 ) {
   // Compile pattern with pathToRegexp at first
@@ -18,7 +18,7 @@ export default function createCacher (
   const _isUrlCacheable = isUrlCacheable(compiledCacheStrategies)
   const _createCacheKey = createCacheKey(compiledCacheStrategies)
 
-  const newOpts: LoadOrUse = {
+  const newOpts: CacherAPI = {
     modifyCacheKey: opts.modifyCacheKey || defaultModifyCacheKey,
     load: opts.load
   }
