@@ -6,10 +6,10 @@ export type PathToRegexp = RegExp & {
   }[]
 }
 
-export type CacheObject = {
-  has(key: string): Promise<boolean> | boolean,
-  get(key: string): Promise<string> | any,
-  set(key: string, val: any): Promise<void> | void
+export type CacheObject = Map<string, *> | {
+  has(key: string): Promise<boolean>,
+  get(key: string): Promise<string>,
+  set(key: string, val: any): Promise<void>
 }
 
 export type CacheStrategy = {
@@ -22,8 +22,13 @@ export type CompiledCacheStrategy = CacheStrategy & {
 }
 
 export type LoadOrUseOption = {
-  modifyCacheKey(key: string): string,
-  load(): Promise<any>
+  modifyCacheKey?: (key: string) => string,
+  load(obj: { url: string }): Promise<any>
+}
+
+export type LoadOrUse = {
+  modifyCacheKey: (key: string) => string,
+  load(obj: { url: string }): Promise<any>
 }
 
 // express middleware
