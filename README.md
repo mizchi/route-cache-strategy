@@ -1,6 +1,6 @@
 # cache-strategy
 
-![](https://circleci.com/gh/mizchi/cache-strategy.png?circle-token=eb266c3df82a27985d950994624d7cd7f23ad49d)
+![](https://circleci.com/gh/mizchi/cache-strategy.svg?style=shield&circle-token=eb266c3df82a27985d950994624d7cd7f23ad49d)
 
 State cashing by routing.
 
