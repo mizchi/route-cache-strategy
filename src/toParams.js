@@ -1,5 +1,5 @@
 /* @flow */
-import type { CompiledCacheStrategy, PathToRegexp } from './types'
+import type { PathToRegexp } from './types'
 
 export default (pattern: PathToRegexp, url: string) => {
   const params = {}

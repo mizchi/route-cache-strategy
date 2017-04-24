@@ -1,16 +1,15 @@
 /* @flow */
-import pathToRegexp from 'path-to-regexp'
 import isUrlCacheable from './isUrlCacheable'
 import createCacheKey from './createCacheKey'
 import compileCacheStrategies from './compileCacheStrategies'
-import type { CacheObject, CacheStrategy, CompiledCacheStrategy, CacherOption, CacherAPI } from './types'
+import type { CacheObject, CacheStrategy } from './types'
 
 const defaultModifyCacheKey = (id: string) => id
 
 export default function createCacher (
   cacheStrategies: CacheStrategy[],
   func: Function,
-  cacheObject: CacheObject = new Map
+  cacheObject: CacheObject = new Map()
 ) {
   // Compile pattern with pathToRegexp at first
   const compiledCacheStrategies = compileCacheStrategies(cacheStrategies)

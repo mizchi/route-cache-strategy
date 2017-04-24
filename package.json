@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "test": "ava",
+    "lint": "eslint src test",
     "prepare": "babel src -d lib"
   },
   "ava": {
