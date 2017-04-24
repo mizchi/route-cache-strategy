@@ -17,7 +17,7 @@ yarn add @mizchi/cache-strategy
 ## Example
 
 ```js
-import createCacher from 'cache-strategy'
+import createCacher from '@mizchi/cache-strategy'
 
 const strategies = [
   {
