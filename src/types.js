@@ -1,5 +1,11 @@
 /* @flow */
-// Types
+
+export type PathToRegexp = RegExp & {
+  keys: {
+    name: string
+  }[]
+}
+
 export type CacheObject = {
   has(key: string): Promise<boolean> | boolean,
   get(key: string): Promise<string> | any,
@@ -12,7 +18,7 @@ export type CacheStrategy = {
 }
 
 export type CompiledCacheStrategy = CacheStrategy & {
-  compiledPattern: RegExp
+  compiledPattern: PathToRegexp
 }
 
 export type LoadOrUseOption = {

@@ -1,10 +1,11 @@
 /* @flow */
+import type { CompiledCacheStrategy, PathToRegexp } from './types'
 
-// pathToRegexp.exec(...)  => object
-export default function toParams (regexp: any) {
-  const match = {}
-  regexp.keys.forEach((key, n) => {
-    match[key.name] = regexp[n + 1]
+export default (pattern: PathToRegexp, url: string) => {
+  const params = {}
+  const executed = pattern.exec(url)
+  pattern.keys.forEach((key, n) => {
+    params[key.name] = executed[n + 1]
   })
-  return match
+  return params
 }

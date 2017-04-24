@@ -8,7 +8,7 @@ const createCacheKey: CompiledCacheStrategy[] => string => Promise<string> =
     if (st) {
       const m = st.compiledPattern.exec(url)
       if (m) {
-        const params = toParams(m)
+        const params = toParams(st.compiledPattern, m)
         return st.createCacheKey(params)
       }
     }
