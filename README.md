@@ -1,10 +1,18 @@
 # cache-strategy
 
-WIP
+![](https://circleci.com/gh/mizchi/cache-strategy.png?circle-token=eb266c3df82a27985d950994624d7cd7f23ad49d)
 
 State cashing by routing.
 
 This is focusing react ssr.
+
+## Install
+
+```shell
+npm install @mizchi/cache-strategy --save
+# or
+yarn add @mizchi/cache-strategy
+```
 
 ## Example
 
