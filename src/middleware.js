@@ -1,13 +1,9 @@
 /* @flow */
-import type {CacheStorategy, LoadOrUseOption} from './types'
-
+import type {CacheStrategy, LoadOrUseOption, Middleware} from './types'
 import createCacher from './index'
 
-// express middleware
-type Middleware = (req: any, res: any, next: Function) => any
-
 export default (
-  strategies: CacheStorategy[],
+  strategies: CacheStrategy[],
   storage: any,
   opts: LoadOrUseOption
 ): Middleware => {

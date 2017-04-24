@@ -1,3 +1,4 @@
+/* @flow */
 // Types
 export type CacheObject = {
   has(key: string): Promise<boolean> | boolean,
@@ -18,3 +19,6 @@ export type LoadOrUseOption = {
   modifyCacheKey(key: string): string,
   load(): Promise<any>
 }
+
+// express middleware
+export type Middleware = (req: any, res: any, next: Function) => any

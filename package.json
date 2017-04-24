@@ -6,7 +6,9 @@
   "devDependencies": {
     "@mizchi/babel-preset": "^1.0.2",
     "ava": "^0.19.1",
-    "babel-preset-env": "^1.4.0"
+    "babel-preset-env": "^1.4.0",
+    "eslint": "^3.19.0",
+    "eslint-config-mizchi": "^1.0.0"
   },
   "ava": {
     "files": "test/**/*.test.js",
