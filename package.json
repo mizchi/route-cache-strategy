@@ -1,18 +1,11 @@
 {
-  "name": "cache-storategy",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "@mizchi/cache-storategy",
+  "version": "0.1.0",
+  "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
-    "test": "ava"
-  },
-  "devDependencies": {
-    "@mizchi/babel-preset": "^1.0.2",
-    "ava": "^0.19.1",
-    "babel-preset-env": "^1.4.0",
-    "babel-register": "^6.24.1",
-    "eslint": "^3.19.0",
-    "eslint-config-mizchi": "^1.0.0"
+    "test": "ava",
+    "prepare": "babel src -d lib"
   },
   "ava": {
     "files": "test/**/*.test.js",
@@ -24,5 +17,16 @@
   "dependencies": {
     "path-to-regexp": "^1.7.0",
     "redis": "^2.7.1"
-  }
+  },
+  "devDependencies": {
+    "@mizchi/babel-preset": "^1.0.2",
+    "ava": "^0.19.1",
+    "babel-preset-env": "^1.4.0",
+    "babel-register": "^6.24.1",
+    "eslint": "^3.19.0",
+    "eslint-config-mizchi": "^1.0.0"
+  },
+  "files": [
+    "lib"
+  ]
 }

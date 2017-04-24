@@ -1,6 +1,6 @@
 /* @flow */
 import test from 'ava'
-import createCacher from '../src/index'
+import createCacher from '../src'
 
 const myStrategies = [
   {
