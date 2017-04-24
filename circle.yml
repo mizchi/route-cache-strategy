@@ -1,0 +1,21 @@
+machine:
+  node:
+    version: 7.7.3
+  timezone: Asia/Tokyo
+  environment:
+    PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
+    REDIS_URL: redis://localhost:6379
+
+dependencies:
+  override:
+    - yarn
+  cache_directories:
+    - ~/.cache/yarn
+
+test:
+  pre:
+    - sudo service redis-server start
+  override:
+    - yarn lint
+    - yarn test
+    - yarn prepare
