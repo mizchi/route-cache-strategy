@@ -27,7 +27,7 @@ const strategies = [
       const updated_at = await res.text()
       return `items-${params.id}-${updated_at}`
     },
-    expire: 1 * 1000
+    expire: 60 * 1000 // it works with only redis
   }
 ]
 

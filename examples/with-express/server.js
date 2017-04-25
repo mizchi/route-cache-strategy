@@ -10,7 +10,8 @@ const strategies = [
     pattern: '/items/:id',
     async createCacheKey (params: { id: string }) {
       return params.id
-    }
+    },
+    expire: 10 * 1000
   }
 ]
 
