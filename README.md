@@ -1,4 +1,4 @@
-# cache-strategy
+# route-cache-strategy
 
 ![](https://circleci.com/gh/mizchi/cache-strategy.svg?style=shield&circle-token=eb266c3df82a27985d950994624d7cd7f23ad49d)
 
@@ -9,17 +9,17 @@ This is focusing react ssr.
 ## Install
 
 ```shell
-npm install @mizchi/cache-strategy --save
+npm install route-cache-strategy --save
 # or
-yarn add @mizchi/cache-strategy
+yarn add route-cache-strategy
 ```
 
 ## Example
 
 ```js
-import createCacher from '@mizchi/cache-strategy'
+import createRouteCacher from 'route-cache-strategy'
 
-const strategies = [
+const myStrategies = [
   {
     pattern: '/items/:id',
     async createCacheKey(params) {
@@ -38,7 +38,7 @@ const func = async input => {
   }
 }
 
-const cacher = createCacher(myStrategies, func)
+const cacher = createRouteCacher(myStrategies, func)
 ;(anync () => {
   const data = await cacher({url: '/items/aaa'})
   console.log(data)
