@@ -12,14 +12,20 @@ const myStrategies = [
   }
 ]
 
-test('it returns true if url is included', t => {
+test('returns true if url is included', t => {
   const compiled = compileCacheStrategies(myStrategies)
   const cacheable = isUrlCacheable(compiled)('/items/:id')
   t.is(cacheable, true)
 })
 
-test('it returns false if url is not included', t => {
+test('returns false if url is not included', t => {
   const compiled = compileCacheStrategies(myStrategies)
   const cacheable = isUrlCacheable(compiled)('/xxx/yyy')
   t.is(cacheable, false)
+})
+
+test('returns true if url is included with parameter', t => {
+  const compiled = compileCacheStrategies(myStrategies)
+  const cacheable = isUrlCacheable(compiled)('/items/:id?a=1')
+  t.is(cacheable, true)
 })
