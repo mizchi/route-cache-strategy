@@ -9,7 +9,8 @@ const defaultModifyCacheKey = (id: string) => id
 export default function createCacher (
   cacheStrategies: CacheStrategy[],
   func: Function,
-  cacheObject: CacheObject = new Map()
+  cacheObject: CacheObject = new Map(),
+  skipCacheByResult: any => boolean = () => false
 ) {
   // Compile pattern with pathToRegexp at first
   const compiledCacheStrategies = compileCacheStrategies(cacheStrategies)
@@ -37,9 +38,13 @@ export default function createCacher (
     }
 
     if (!state) {
-      // pure function
+      // should be pure function
       state = await func(input)
-      if (isCacheable && key) {
+      if (
+        isCacheable &&
+        key &&
+        !(skipCacheByResult(state))
+      ) {
         const expire: any = _getExpire(input.url)
         await cacheObject.set(key, state, expire)
       }

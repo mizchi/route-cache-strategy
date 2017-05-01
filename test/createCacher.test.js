@@ -27,7 +27,11 @@ const func: Input => Promise<Result> = async (input: Input) => {
   }
 }
 
-const cacher: Input => Promise<Result> = createCacher(myStrategies, func)
+const skipCacheByResult = result => {
+  return result.url === '/items/nocache'
+}
+
+const cacher: Input => Promise<Result> = createCacher(myStrategies, func, undefined, skipCacheByResult)
 
 test('returns object if url is cached by createCacheKey', async t => {
   const ret1 = await cacher({url: '/items/aaa'})
@@ -55,6 +59,21 @@ test('always call `call`', async t => {
   const ret2 = await cacher({url: '/xxx/yyy'})
   t.deepEqual(ret2, {
     url: '/xxx/yyy',
+    createdAt: ret2.createdAt
+  })
+})
+
+test('skip caching when result hits skipping flag', async t => {
+  const ret1 = await cacher({url: '/items/nocache'})
+  t.deepEqual(ret1, {
+    url: '/items/nocache',
+    createdAt: ret1.createdAt
+  })
+
+  // skip cache
+  const ret2 = await cacher({url: '/items/nocache'})
+  t.deepEqual(ret2, {
+    url: '/items/nocache',
     createdAt: ret2.createdAt
   })
 })
