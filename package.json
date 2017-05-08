@@ -31,5 +31,7 @@
   },
   "files": [
     "lib"
-  ]
+  ],
+  "repository": "git@github.com:mizchi/route-cache-strategy.git",
+  "author": "mizchi <miz404@gmail.com>"
 }
