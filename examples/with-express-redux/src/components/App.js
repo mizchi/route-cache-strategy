@@ -1,7 +1,10 @@
 /* @flow */
 import React from 'react'
+import { connect } from 'react-redux'
 
-export default function App(props: any) {
+const mapStateToProps = state => state
+
+export default connect(mapStateToProps)(function App(props: any) {
   console.log('render App')
   return (
     <div>
@@ -9,4 +12,4 @@ export default function App(props: any) {
       <p>{props.createdAt}</p>
     </div>
   )
-}
+})

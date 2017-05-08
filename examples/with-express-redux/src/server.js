@@ -2,12 +2,18 @@
 import express from 'express'
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
+import { Provider } from 'react-redux'
 import createCacher from '../../../src'
+import createStore from './store'
 import strategies from './strategies'
 import App from './components/App'
 
 function renderFullPage(initialState: any) {
-  const html = ReactDOMServer.renderToString(<App {...initialState} />)
+  const html = ReactDOMServer.renderToString(
+    <Provider store={createStore(initialState)}>
+      <App />
+    </Provider>
+  )
   return `
     <html>
       <head>
