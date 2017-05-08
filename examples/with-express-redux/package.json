@@ -1,15 +1,27 @@
 {
-  "name": "with-express",
+  "name": "with-express-redux",
   "version": "1.0.0",
   "main": "server.js",
   "license": "MIT",
   "scripts": {
-    "start": "babel-node server.js"
+    "build": "webpack",
+    "watch:client": "webpack -w",
+    "watch:server": "nodemon --exec yarn start",
+    "start": "babel-node src/server.js"
   },
   "dependencies": {
     "express": "^4.15.2",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
-    "redis": "^2.7.1"
+    "react-redux": "^5.0.4",
+    "redis": "^2.7.1",
+    "redux": "^3.6.0"
+  },
+  "devDependencies": {
+    "babel-loader": "^7.0.0",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-react": "^6.24.1",
+    "nodemon": "^1.11.0",
+    "webpack": "^2.5.1"
   }
 }
