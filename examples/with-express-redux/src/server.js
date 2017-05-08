@@ -49,6 +49,9 @@ server.use(async (req, res, next) => {
 
 server.get('*', (req, res) => {
   const initialState = req.builtParams
+  if (req.headers['content-type']) {
+    return res.send(initialState)
+  }
   const html = renderFullPage(initialState)
   res.send(html)
 })

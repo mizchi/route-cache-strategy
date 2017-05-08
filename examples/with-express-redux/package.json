@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "express": "^4.15.2",
+    "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-redux": "^5.0.4",
@@ -19,6 +20,7 @@
   },
   "devDependencies": {
     "babel-loader": "^7.0.0",
+    "babel-polyfill": "^6.23.0",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react": "^6.24.1",
     "nodemon": "^1.11.0",

@@ -2,7 +2,11 @@
   "presets": [
     "flow", "react",
     [
-      "env"
+      "env", {
+        "exclude": [
+          "transform-regenerator"
+        ]
+      }
     ]
   ]
 }
