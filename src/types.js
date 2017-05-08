@@ -6,10 +6,12 @@ export type PathToRegexp = RegExp & {
   }[]
 }
 
-export type CacheObject = Map<string, *> | {
-  get(key: string): Promise<string>,
-  set(key: string, val: any, expire?: number): Promise<void>
-}
+export type CacheObject =
+  | Map<string, *>
+  | {
+      get(key: string): Promise<string>,
+      set(key: string, val: any, expire?: number): Promise<void>
+    }
 
 export type CacheStrategy = {
   pattern: string,

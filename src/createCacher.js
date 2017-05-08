@@ -6,7 +6,7 @@ import type { CacheObject, CacheStrategy } from './types'
 
 const defaultModifyCacheKey = (id: string) => id
 
-export default function createCacher (
+export default function createCacher(
   cacheStrategies: CacheStrategy[],
   func: Function,
   cacheObject: CacheObject = new Map(),
@@ -22,8 +22,12 @@ export default function createCacher (
     return st && st.expire
   }
 
-  return async (input: { url: string }, callOpts?: { modifyCacheKey?: string => string }) => {
-    const modifyCacheKey = (callOpts && callOpts.modifyCacheKey) || defaultModifyCacheKey
+  return async (
+    input: { url: string },
+    callOpts?: { modifyCacheKey?: string => string }
+  ) => {
+    const modifyCacheKey =
+      (callOpts && callOpts.modifyCacheKey) || defaultModifyCacheKey
     let state: any
     let key
     const isCacheable = _isUrlCacheable(input.url)
@@ -40,11 +44,7 @@ export default function createCacher (
     if (!state) {
       // should be pure function
       state = await func(input)
-      if (
-        isCacheable &&
-        key &&
-        !(skipCacheByResult(state))
-      ) {
+      if (isCacheable && key && !skipCacheByResult(state)) {
         const expire: any = _getExpire(input.url)
         await cacheObject.set(key, state, expire)
       }
