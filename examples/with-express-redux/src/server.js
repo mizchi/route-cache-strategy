@@ -14,19 +14,19 @@ function renderFullPage(initialState: any) {
       <App />
     </Provider>
   )
-  return `
-    <html>
-      <head>
-        <meta charSet="utf-8" >
-      </head>
-      <body>
-        <main>${html}</main>
-        <script>
-          window.__PRELOADED_STATE__ = ${JSON.stringify(initialState).replace(/</g, '\\u003c')}
-        </script>
-        <script src="bundle.js"></script>
-      </body>
-    </html>
+  return `<!DOCTYPE html>
+<html>
+  <head>
+    <meta charSet="utf-8" >
+  </head>
+  <body>
+    <main>${html}</main>
+    <script>
+      window.__PRELOADED_STATE__ = ${JSON.stringify(initialState).replace(/</g, '\\u003c')}
+    </script>
+    <script src="/bundle.js"></script>
+  </body>
+</html>
   `
 }
 
@@ -49,10 +49,13 @@ server.use(async (req, res, next) => {
 
 server.get('*', (req, res) => {
   const initialState = req.builtParams
-  if (req.headers['content-type']) {
+  if (req.headers['content-type'] === 'applicaiton/json') {
+    res.setHeader('content-type', 'applicaiton/json')
     return res.send(initialState)
   }
   const html = renderFullPage(initialState)
+  console.log('render html', html)
+  res.setHeader('content-type', 'text/html')
   res.send(html)
 })
 

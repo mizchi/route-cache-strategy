@@ -3,7 +3,7 @@ export default [
   {
     pattern: '/items/:id',
     async createCacheKey(params: { id: string }) {
-      return params.id
+      return `v1:${params.id}`
     }
   }
 ]

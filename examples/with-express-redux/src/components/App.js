@@ -3,6 +3,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
+import { isUrlCacheable, compileCacheStrategies } from '../../../../src'
+import strategies from '../strategies'
+
 const mapStateToProps = state => state
 
 const fetchUrlState = async (url: string) => {
@@ -18,11 +21,19 @@ const Link = (
 ) => (
   <button
     onClick={async () => {
-      const data = await fetchUrlState(url)
-      console.log(data, context)
-      if (location.pathname !== url) {
-        console.log('pushed to', url)
-        history.pushState({}, '', url)
+      if (isUrlCacheable(compileCacheStrategies(strategies))(url)) {
+        const data = await fetchUrlState(url)
+        console.log(data, context)
+        if (location.pathname !== url) {
+          console.log('pushed to', url)
+          context.store.dispatch({
+            type: 'REPLACE',
+            payload: data
+          })
+          history.pushState({}, '', url)
+        }
+      } else {
+        location.href = url
       }
     }}
   >
@@ -42,6 +53,7 @@ export default connect(mapStateToProps)(function App(props: any) {
       <Link url={'/'} />
       <Link url={'/nocache'} />
       <Link url={'/items/aaa'} />
+      <Link url={'/items/bbb'} />
     </div>
   )
 })
