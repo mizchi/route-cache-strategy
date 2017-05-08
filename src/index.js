@@ -1,4 +1,4 @@
 /* @flow */
 
-// eslint-disable-next-line
-export { default as default } from './createCacher'
+export { default } from './createCacher'
+export { default as isUrlCacheable } from './isUrlCacheable'
